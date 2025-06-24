@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WSI - Task Tracker</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: url('banner.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+    header {
+      background: url('banner.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .footer-link a {
+      margin: 0 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-4 bg-white p-4 rounded">
+    <header class="bg-primary text-white text-center p-3 rounded">
+      <h1>Wonderful Stars Int'l | <br>BELIEVERS FORUM</h1>
+      <h3>Task Submission Tracker</h3>
+    </header>
+
+    <nav class="my-3 text-center">
+      <a href="index.html" class="btn btn-outline-primary btn-sm">Home</a>
+      <a href="tracker.html" class="btn btn-outline-secondary btn-sm">Tracker</a>
+      <a href="admin.html" class="btn btn-outline-success btn-sm">Admin</a>
+    </nav>
+
+    <div class="mb-3">
+      <label for="dateSort" class="form-label">Sort by Date:</label>
+      <select id="dateSort" class="form-select form-select-sm w-auto">
+        <option value="desc">Newest First</option>
+        <option value="asc">Oldest First</option>
+      </select>
+    </div>
+
+    <div class="accordion" id="taskAccordion"></div>
+
+    <footer class="text-center mt-5 text-muted small">
+      <div class="footer-link">
+        <a href="index.html">Home</a> |
+        <a href="tracker.html">Tracker</a> |
+        <a href="admin.html">Admin</a>
+      </div>
+      Powered by Datagurix
+    </footer>
+  </div>
+
+  <script>
+    const accordion = document.getElementById("taskAccordion");
+    const submissions = JSON.parse(localStorage.getItem("submissions")) || [];
+    const dateSort = document.getElementById("dateSort");
+
+    function renderTasks(order = 'desc') {
+      accordion.innerHTML = "";
+      const grouped = {};
+
+      submissions.forEach(entry => {
+        if (!grouped[entry.date]) grouped[entry.date] = [];
+        grouped[entry.date].push(entry);
+      });
+
+      let dates = Object.keys(grouped);
+      dates.sort((a, b) => {
+        const da = new Date(a), db = new Date(b);
+        return order === 'asc' ? da - db : db - da;
+      });
+
+      dates.forEach((dateStr, index) => {
+        const entries = grouped[dateStr];
+        const collapseId = `collapse${index}`;
+
+        const items = entries.map(e =>
+          `<li class="list-group-item">${e.name} - ${Array.isArray(e.task) ? e.task.join(", ") : e.task}</li>`
+        ).join("");
+
+        const card = `
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading${index}">
+              <button class="accordion-button ${index > 0 ? 'collapsed' : ''}" type="button" data-bs-toggle="collapse" data-bs-target="#${collapseId}">
+                ${dateStr}
+              </button>
+            </h2>
+            <div id="${collapseId}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" data-bs-parent="#taskAccordion">
+              <div class="accordion-body p-0">
+                <ul class="list-group list-group-flush">${items}</ul>
+              </div>
+            </div>
+          </div>
+        `;
+        accordion.insertAdjacentHTML("beforeend", card);
+      });
+    }
+
+    // Initial render
+    renderTasks();
+
+    // Sort by date toggle
+    dateSort.addEventListener("change", () => {
+      renderTasks(dateSort.value);
+    });
+  </script>
+
+  <!-- Bootstrap JS (required for accordion) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

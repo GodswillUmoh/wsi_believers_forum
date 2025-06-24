@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WSI - Task Selector</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: url('banner.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+    header {
+      background: url('banner.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .box-card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      margin-bottom: 30px;
+    }
+    .footer-link a {
+      margin: 0 10px;
+    }
+
+     .fixed-box-img {
+    height: 280px;         /* fixed height */
+    object-fit: cover;     /* crops to fill without distortion */
+    border-radius: 8px;    /* optional: rounded corners */
+  }
+  </style>
+</head>
+<body>
+  <div class="container mt-4 bg-white p-4 rounded">
+    <header class="bg-primary text-white text-center p-3 rounded">
+      <h1>Wonderful Stars Int'l | <br>BELIEVERS FORUM</h1>
+      <h3>Weekly Task Selector</h3>
+    </header>
+
+    <nav class="my-3 text-center">
+      <a href="index.html" class="btn btn-outline-primary btn-sm">Home</a>
+      <a href="tracker.html" class="btn btn-outline-secondary btn-sm">Tracker</a>
+      <a href="admin.html" class="btn btn-outline-success btn-sm">Admin</a>
+    </nav>
+
+    <form id="taskForm" class="border p-4 rounded shadow-sm bg-light">
+      <div class="mb-3">
+        <label class="form-label">Name:</label>
+        <input type="text" id="name" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">WhatsApp Phone Number:</label>
+        <input type="tel" id="phone" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Select Task:</label>
+        <select id="taskSelect" class="form-select" required></select>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit Task</button>
+    </form>
+
+    <!-- 3 Box Content Section -->
+    <section class="my-5">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <div class="p-3 box-card">
+            <h5>Bible Studies</h5>
+            <img src="box.png" alt="Task" class="img-fluid w-100 fixed-box-img">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-3 box-card">
+            <h5>Prayers</h5>
+            <img src="pray.png" alt="Prayer" class="img-fluid w-100 fixed-box-img">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-3 box-card">
+            <h5>Outreaches</h5>
+            <img src="evang.png" alt="Bible" class="img-fluid w-100 fixed-box-img">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center mt-4 text-muted small">
+      <div class="footer-link">
+        <a href="index.html">Home</a> |
+        <a href="tracker.html">Tracker</a> |
+        <a href="admin.html">Admin</a>
+      </div>
+      <div>Powered by Datagurix</div>
+    </footer>
+  </div>
+
+  <script src="data.js"></script>
+</body>
+</html>
